@@ -13,38 +13,40 @@
 function get(url, password) {
   var xhr = new XMLHttpRequest(); 
   var div = document.getElementById('message');
- var str = '<p> url: ' + url + '</p>' + '<p> psw: ' + password + '</p>';
-try {
-  xhr.open('GET', 'http://127.0.0.1/' + url, true);
-  xhr.setRequestHeader('Authorization',password); 
+ var str = '';
+	try {
+	  xhr.open('GET', url, true);
+	  // устанавливаем заголовок
+	  xhr.setRequestHeader('Authorization',password); 
 
-  xhr.onreadystatechange = function() {  
-    if (xhr.readyState != 4) return; 
+	  xhr.onreadystatechange = function() {  
+	    if (xhr.readyState != 4) return; 
 
-    if (xhr.status != 200) {
-      // обработать ошибку
-	div.innerHTML = str +  'Ошибка ' + xhr.status + ': ' + xhr.statusText;
-      return; 
-    } 
+	    if (xhr.status != 200) {
+	      // обработать ошибку
+		div.innerHTML = 'Ошибка ' + xhr.status + ': ' + xhr.statusText;
+		return;
+	    } 
 
-    // обработать результат
-    div.innerHTML = str + xhr.responseText; 
-  }
+	    // обработать результат
+	    div.innerHTML = xhr.responseText; 
+	  }
 
-  xhr.send(null); 
-   } catch(e) {
-		console.log(e.name + ' : ' + e.message + ' <> ' + e.stack);
+	  xhr.send(null); 
+	   } catch(e) {
+			console.log(e.name + ' : ' + e.message + ' <> ' + e.stack);
+		}
 	}
-}
-function vote(outElem) {
-	var url = document.getElementById('url');
-	var psw = document.getElementById('psw');
-	console.log('url: ' + url.value + ' psw: ' + psw.value);
-	get(url.value, psw.value);
-	url.value = '';
-	psw.value = '';
-}
-</script>
+	function vote(outElem) {
+		var url = document.getElementById('url');
+		var psw = document.getElementById('psw');
+
+		console.log('url: ' + url.value + ' psw: ' + psw.value);
+		get(url.value, psw.value);
+		url.value = '';
+		psw.value = '';
+	}
+	</script>
 
 
 </body>
